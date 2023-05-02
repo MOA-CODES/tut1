@@ -1,10 +1,10 @@
-const amount = 12
+//3-modules separate files or code
+//encapsulation
+const names = require('./4-firstmodule')
+const sayHi = require('./5-secondmodule')
 
-if(amount < 10){
-    console.log('small number')
-}
-else{
-    console.log('large number')
-}
+console.log(names)
 
-console.log('not my first node app')
+sayHi('philip')
+sayHi(names.harry)
+sayHi(names.john)
