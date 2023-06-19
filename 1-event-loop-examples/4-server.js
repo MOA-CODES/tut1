@@ -1,10 +1,3 @@
-// const _ = require('lodash');
-
-// const items = [1, [2, [3, [4]]]];
-// const newitems = _.flattenDeep(items);
-// console.log(newitems);
-// console.log("whats up"); 
-
 const http = require('http')
 
 const server = http.createServer((req, res) => {
