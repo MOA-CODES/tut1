@@ -1,37 +1,15 @@
-const { log } = require('console');
-const {readFile,writeFile} = require('fs').promises //shortening, removing the need for line 3-5
-// const util = require('util');
-// const readFilePromise = util.promisify(readFile);
-// const writeFilePromise = util.promisify(writeFile);
+var http = require('http')
+var fs = require('fs')
 
-  const start = async()=>{
-    try{
-      const first = await readFile('./content/first.txt', 'utf8');
-      const second = await readFile('./content/second.txt', 'utf8');
-      await writeFile('./content/result-mind-grenade.txt',`My songs: \n ${first} ${second}`,{flag: 'w+'});
-      log(first,second); //same as console.log because of line 1
-    }
-    catch(error){
-      console.log(error);
-    }
-  
-  }
-
-  start(); 
-
-
-// const getText = (path)=>{ //this is now the readfilepromise
-//   return new Promise((resolve, reject)=>{
-//     readFile(path,'utf8',(err, data)=>{
-//       if(err){
-//         reject(err);
-//       }else{
-//         resolve(data)
-//       }
-//       })
-//   })
-// }
- // getText('./content/first.txt')
-  //   .then(result => console.log(result))
-  //   .catch(err => console.log(err))
-
+http.createServer(function (req, res) {
+    // const text = fs.readFileSync('./content/big.txt', 'utf8')
+    // res.end(text)
+    const fileStream = fs.createReadStream('./content/big.txt', 'utf8')
+    fileStream.on('open', () => {
+      fileStream.pipe(res)//pushes from read stream to writestream
+    })//instead of sending in one large file like before were now sending in chunks
+    fileStream.on('error', (err) => {
+      res.end(err)
+    }) 
+  })
+  .listen(5000)
